@@ -11,13 +11,14 @@ maxsub(int[] S; low, high: int) return (lowIndex, highIndex, sum)
     end if;
 
     return triple with highest sum
+    return triple with highest sum
 
 end maxsub
 
 middlemaxsub(int[] S; low, high, int) return (lowIndex, highIndex, sum)
     start at mid and find bestleft and leftsum
     start at mid and find bestright and rightsum
-    
+
     return (bestleft, bestright, rightsum+leftsum)
 end middlemaxsub
 
