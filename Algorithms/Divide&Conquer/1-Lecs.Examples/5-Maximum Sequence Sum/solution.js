@@ -1,3 +1,29 @@
+/* 
+Pseudo-code
+maxsub(int[] S; low, high: int) return (lowIndex, highIndex, sum)
+    if low = high then
+        return (low, high, S(low))
+    else
+        mid = (low + high) / 2
+        (llow, lhigh, lsum) = maxsub(S, low, mid)
+        (rlow, rhigh, rsum) = maxsub(S, mid+1, high)
+        (mlow, mhigh, msum) = middlemaxsub(S, low, mid, high)
+    end if;
+
+    return triple with highest sum
+
+end maxsub
+
+middlemaxsub(int[] S; low, high, int) return (lowIndex, highIndex, sum)
+    start at mid and find bestleft and leftsum
+    start at mid and find bestright and rightsum
+    
+    return (bestleft, bestright, rightsum+leftsum)
+end middlemaxsub
+
+*/
+
+
 function findMaxSubArray(array, start, end) {
     if (start === end) {
         // Base case: if the array contains only one element
