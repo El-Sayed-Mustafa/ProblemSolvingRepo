@@ -14,31 +14,29 @@ function partition(arr, first, last) {
     var pivotValue = arr[first];
     var leftMark = first + 1;
     var rightMark = last;
-    var done = false;
 
-    while (!done) {
-        // Step 2: Move leftMark and rightMark towards each other until they cross
-        while (leftMark <= rightMark && arr[leftMark] <= pivotValue) {
+    while (leftMark <= rightMark) {
+        // Step 2: Move leftMark towards the right until an element greater than the pivot is found
+        while (arr[leftMark] <= pivotValue && leftMark <= rightMark) {
             leftMark++;
         }
+
+        // Step 2: Move rightMark towards the left until an element less than the pivot is found
         while (arr[rightMark] >= pivotValue && rightMark >= leftMark) {
             rightMark--;
         }
 
         if (rightMark < leftMark) {
-            done = true;
-        } else {
-            // Step 3: Swap the elements at leftMark and rightMark
-            var temp = arr[leftMark];
-            arr[leftMark] = arr[rightMark];
-            arr[rightMark] = temp;
+            // Step 2: Exit the loop if the leftMark and rightMark have crossed each other
+            break;
         }
+
+        // Step 3: Swap the elements at leftMark and rightMark
+        [arr[leftMark], arr[rightMark]] = [arr[rightMark], arr[leftMark]];
     }
 
     // Step 4: Move the pivot to its final sorted position
-    var temp = arr[first];
-    arr[first] = arr[rightMark];
-    arr[rightMark] = temp;
+    [arr[first], arr[rightMark]] = [arr[rightMark], arr[first]];
 
     // Step 5: Return the split point
     return rightMark;
