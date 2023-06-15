@@ -1,5 +1,9 @@
 
 /* 
+
+!𝒎𝟏 = 𝒂 × 𝒄, 𝒎𝟐 = 𝒃 × 𝒅, 𝒛 = (𝒂 + 𝒃) × (𝒄 + 𝒅)
+!𝑟𝑒𝑠𝑢𝑙𝑡 = 10^𝑁 × 𝒎𝟐 + 10^𝑁/2 × (𝒛 − 𝒎𝟏 − 𝒎𝟐) + 𝒎1
+
 !function karatsubaMultiply(X, Y):
     ?Base case: If either X or Y is a single-digit number, perform traditional multiplication
     if length(X) == 1 or length(Y) == 1:
@@ -16,14 +20,14 @@
     C = Y[mid:N]
 
     ?Recursively compute the three partial products
-    Z0 = karatsubaMultiply(A, C)
-    Z1 = karatsubaMultiply((A + B), (C + D))
-    Z2 = karatsubaMultiply(B, D)
+    𝒎𝟏 = karatsubaMultiply(A, C)
+    𝒛 = karatsubaMultiply((A + B), (C + D))
+    𝒎𝟐 = karatsubaMultiply(B, D)
 
     ?Compute the final result using the partial products
-    term1 = Z2 * (10 ^ (2 * mid))
-    term2 = (Z1 - Z2 - Z0) * (10 ^ mid)
-    result = term1 + term2 + Z0
+    term1 = 𝒎𝟐 * (10 ^ (2 * mid))
+    term2 = (𝒛 - 𝒎𝟐 - 𝒎𝟏) * (10 ^ mid)
+    result = term1 + term2 + 𝒎𝟏
 
     return result
 
