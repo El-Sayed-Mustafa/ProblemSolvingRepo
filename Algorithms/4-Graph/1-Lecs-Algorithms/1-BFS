@@ -1,3 +1,4 @@
+//!Goal : Traverse the Graph
 function BFS(graph, startVertex) {
     const color = {}; // Color of each vertex
     const distance = {}; // Distance from the startVertex
@@ -20,13 +21,22 @@ function BFS(graph, startVertex) {
 
         for (const adjacentVertex of graph[currentVertex]) {
             if (color[adjacentVertex] === 'WHITE') {
-                color[adjacentVertex] = 'GREY'; // Mark the vertex as visited (Grey)
-                distance[adjacentVertex] = distance[currentVertex] + 1; // Update the distance of adjacentVertex from the startVertex
-                parent[adjacentVertex] = currentVertex; // Set the parent of adjacentVertex as currentVertex
-                queue.push(adjacentVertex); // Enqueue the adjacentVertex for further exploration
+
+                 // Mark the vertex as visited (Grey)
+                color[adjacentVertex] = 'GREY';
+
+                // Update the distance of adjacentVertex from the startVertex
+                distance[adjacentVertex] = distance[currentVertex] + 1; 
+
+                // Set the parent of adjacentVertex as currentVertex
+                parent[adjacentVertex] = currentVertex; 
+                
+                 // Enqueue the adjacentVertex for further exploration
+                queue.push(adjacentVertex);
             }
         }
 
         color[currentVertex] = 'BLACK'; // Mark the currentVertex as fully explored (Black)
     }
 }
+

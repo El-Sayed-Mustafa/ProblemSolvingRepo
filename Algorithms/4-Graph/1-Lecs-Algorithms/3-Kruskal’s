@@ -1,3 +1,6 @@
+#Kruskal's algorithm is a method for
+#finding a minimum spanning tree (MST) in a weighted graph
+
 def kruskal(graph, weights):
     A = []  # Initialize an empty list A to store the resulting minimum spanning tree
     

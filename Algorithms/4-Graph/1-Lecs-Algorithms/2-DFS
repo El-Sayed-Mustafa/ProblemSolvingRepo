@@ -1,3 +1,4 @@
+//!Goal : Traverse the Graph
 function DFS(G) {
   const color = {}; // Color of each vertex (WHITE, GRAY, BLACK)
   const π = {}; // Parent of each vertex
