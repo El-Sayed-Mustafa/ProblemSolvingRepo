@@ -1,17 +1,22 @@
 function highestIncreasePair(arr) {
-    let current = arr[0]; // Initialize current element to the first element of the array
-    let max = -Infinity; // Initialize max difference to negative infinity
+    // Initialize current element to the first element of the array
+    let current = arr[0];
+    // Initialize max difference to negative infinity
+    let max = -Infinity; 
 
     for (let i = 1; i < arr.length; i++) {
-        let diff = arr[i] - current; // Calculate the difference between the current element and the current
+        // Calculate the difference between the current element and the current
+        let diff = arr[i] - current; 
 
         if (arr[i] < current) {
-            current = arr[i]; // Update the current element if a smaller element is found
+            // Update the current element if a smaller element is found
+            current = arr[i]; 
             continue;
         }
 
         if (diff > max) {
-            max = diff; // Update the max difference if a larger difference is found
+            // Update the max difference if a larger difference is found
+            max = diff; 
         }
     }
 

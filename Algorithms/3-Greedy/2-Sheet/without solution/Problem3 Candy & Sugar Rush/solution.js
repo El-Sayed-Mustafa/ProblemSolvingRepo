@@ -1,10 +1,14 @@
 function calculateMouthfuls(N, C) {
-    let track = 0; // Initialize a variable to track the total number of mouthfuls
-    let i = 1; // Initialize a variable to determine the number of candy pieces per mouthful
+    // Initialize a variable to track the total number of mouthfuls
+    let track = 0;
+    // Initialize a variable to determine the number of candy pieces per mouthful
+    let i = 1;
 
-    while (N > 0) { // Continue eating candy until there are no more pieces remaining
+    // Continue eating candy until there are no more pieces remaining
+    while (N > 0) {
         for (let j = 0; j < C; j++) { // Eat C pieces per mouthful
-            if (N > 0) { // If there are still pieces remaining, eat i pieces and increment the track
+            // If there are still pieces remaining, eat i pieces and increment the track
+            if (N > 0) {
                 N = N - i;
                 track += 1;
             } else {

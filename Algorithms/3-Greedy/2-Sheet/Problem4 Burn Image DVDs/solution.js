@@ -1,16 +1,24 @@
 function burnImageDVDs(images, DVDs, capacity) {
-    images.sort((a, b) => b.rank - a.rank); // Sort the images in descending order of rank
+    // Sort the images in descending order of rank
+    images.sort((a, b) => b.rank - a.rank); 
 
-    const total = new Array(DVDs).fill(0); // Array to store total rank for each DVD
-    const remainingCapacity = new Array(DVDs).fill(capacity); // Array to store remaining capacity for each DVD
+    // Array to store total rank for each DVD
+    const total = new Array(DVDs).fill(0); 
+
+    // Array to store remaining capacity for each DVD
+    const remainingCapacity = new Array(DVDs).fill(capacity);
 
     for (let i = 0; i < images.length; i++) {
         let added = false;
 
         for (let dvd = 0; dvd < DVDs; dvd++) {
             if (images[i].size <= remainingCapacity[dvd]) {
-                total[dvd] += images[i].rank; // Add rank to total for the current DVD
-                remainingCapacity[dvd] -= images[i].size; // Update remaining capacity
+                // Add rank to total for the current DVD
+                total[dvd] += images[i].rank; 
+
+                // Update remaining capacity
+                remainingCapacity[dvd] -= images[i].size; 
+
                 added = true;
                 break;
             }

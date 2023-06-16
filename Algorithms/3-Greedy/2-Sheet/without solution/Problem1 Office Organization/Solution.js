@@ -3,11 +3,15 @@ function officeOrganization(N, M, A, B) {
 
     while (N > M) {
         if (N / 2 * B <= A) {
-            cost++; // Increment cost by 1, as reducing by one unit is cheaper
-            N--; // Reduce the number of documents by one unit
+            // Increment cost by 1, as reducing by one unit is cheaper
+            cost++;
+            // Reduce the number of documents by one unit
+            N--;
         } else {
-            cost += A; // Increment cost by the cost of reducing documents by half (A)
-            N = Math.floor(N / 2); // Reduce the number of documents by half (rounding down)
+            // Increment cost by the cost of reducing documents by half (A)
+            cost += A;
+            // Reduce the number of documents by half (rounding down)
+            N = Math.floor(N / 2);
         }
     }
 
