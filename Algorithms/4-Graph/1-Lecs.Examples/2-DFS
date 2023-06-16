@@ -1,0 +1,35 @@
+function DFS(G) {
+  const color = {}; // Color of each vertex (WHITE, GRAY, BLACK)
+  const π = {}; // Parent of each vertex
+  let time = 0; // Time counter
+
+  // Initialization
+  for (const vertex in G) {
+    color[vertex] = 'WHITE'; // Not yet discovered
+    π[vertex] = null; // Parent is not defined
+  }
+
+  // Iterate over each vertex in G
+  for (const vertex in G) {
+    if (color[vertex] === 'WHITE') {
+      DFSVisit(vertex); // Start DFS visit from vertex
+    }
+  }
+
+  function DFSVisit(u) {
+    color[u] = 'GRAY'; // Vertex u discovered (being visited)
+    time += 1; // Increase the time counter
+    const discoveryTime = time; // Store the discovery time of u
+
+    for (const v of G[u]) {
+      if (color[v] === 'WHITE') {
+        π[v] = u; // Set the parent of v as u
+        DFSVisit(v); // Recursive call to visit v
+      }
+    }
+
+    color[u] = 'BLACK'; // Vertex u fully explored (visited)
+    time += 1; // Increase the time counter
+    const finishingTime = time; // Store the finishing time of u
+  }
+}
