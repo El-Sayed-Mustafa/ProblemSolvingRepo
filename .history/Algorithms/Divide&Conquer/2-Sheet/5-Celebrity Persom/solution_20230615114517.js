@@ -1,3 +1,11 @@
+/*  
+    !note that the code assumes the existence of a knows function
+    to check if one person knows another.
+    You'll need to define the knows function
+    according to the specific requirements of your problem. 
+    
+*/
+
 function findAdel(persons) {
     const firstPerson = persons[0]; // Select the first person as X
     const remainingPersons = persons.slice(1); // Remove the first person from the persons list
@@ -12,7 +20,6 @@ function getAdel(persons, currentIndex, currentPerson) {
 
     const nextPerson = persons[currentIndex];
 
-    //!note that the code assumes the existence of a knows function to check if one person knows another
     if (currentPerson.knows(nextPerson)) {
         // currentPerson is not Adel, continue with nextPerson as currentPerson
         return getAdel(persons, currentIndex + 1, nextPerson);
