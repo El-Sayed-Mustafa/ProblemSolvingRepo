@@ -1,0 +1,16 @@
+//!PseudoCode
+function taskScheduling(tasks) {
+
+    sort(tasks.processingTime)
+
+    sum = 0
+
+    completionTime = 0
+
+    for (i = 1; i < tasks.length; i++) {
+        sum += tasks[i].processingTime
+        completionTime += sum
+    }
+
+    return completionTime / tasks.length
+}
