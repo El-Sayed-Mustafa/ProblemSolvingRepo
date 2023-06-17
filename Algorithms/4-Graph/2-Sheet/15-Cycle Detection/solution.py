@@ -55,7 +55,7 @@ G = {
     'B': ['C'],
     'C': ['D', 'E'],
     'D': ['E'],
-    'E': []
+    'E': ['D']
 }
 
 time = 0  # Global variable to keep track of time
