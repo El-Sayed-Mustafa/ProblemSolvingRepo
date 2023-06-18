@@ -2,6 +2,10 @@ def longest_common_subsequence(str1, str2):
     m = len(str1)
     n = len(str2)
 
+    # Base case: If either string is empty, return an empty string
+    if m == 0 or n == 0:
+        return ""
+
     # Step 1: Create DP table and choice table
     dp = [[0] * (n + 1) for _ in range(m + 1)]
     choice = [[''] * (n + 1) for _ in range(m + 1)]
@@ -44,6 +48,6 @@ def longest_common_subsequence(str1, str2):
     return lcs
 
 # Test the function
-str1 = 'ABCB'
-str2 = 'BDCAB'
+str1 = 'ABCD'
+str2 = 'BDCAD'
 print(longest_common_subsequence(str1, str2))  # Output: HELLO
