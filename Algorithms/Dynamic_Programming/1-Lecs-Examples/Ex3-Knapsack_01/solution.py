@@ -1,71 +1,59 @@
-def knapsack_top_down(W, weights, values, N):
-    # Create a 2D DP table and choice table
-    dp = [[-1] * (N + 1) for _ in range(W + 1)]
-    choice = [[""] * (N + 1) for _ in range(W + 1)]
-
-    # Base case: If either the capacity or the number of items is 0, return 0
-    if W == 0 or N == 0:
-        return 0, choice
-
-    # If the subproblem is already solved, return the stored value
-    if dp[W][N] != -1:
-        return dp[W][N], choice
-
-    # If the weight of the Nth item is greater than the remaining capacity, skip it
-    if weights[N - 1] > W:
-        dp[W][N], choice[W][N] = knapsack_top_down(W, weights, values, N - 1)
-        choice[W][N] = "UP"
-    else:
-        # Choose the maximum value between including or excluding the Nth item
-        included, _ = knapsack_top_down(W - weights[N - 1], weights, values, N - 1)
-        included += values[N - 1]
-        excluded, _ = knapsack_top_down(W, weights, values, N - 1)
-
-        if included > excluded:
-            dp[W][N] = included
-            choice[W][N] = "DIAGONAL"
+def knapsack(W, wt, val, N):
+    # Initialize memoization table
+    R = [[None] * (N + 1) for _ in range(W + 1)]
+    
+    # Recursive function to solve knapsack problem
+    def knapsackRecursive(W, N):
+        # Base case
+        if W == 0 or N == 0:
+            return 0
+        
+        # If the subproblem has already been solved, return the stored value
+        if R[W][N] is not None:
+            return R[W][N]
+        
+        # Check if the weight of the current item exceeds the remaining capacity
+        if wt[N-1] > W:  # Adjusted index here
+            result = knapsackRecursive(W, N - 1)
         else:
-            dp[W][N] = excluded
-            choice[W][N] = "UP"
-
-    return dp[W][N], choice
-
-
-def construct_solution(choice, weights, W, N):
-    # Create an empty list to store the selected items
-    selected_items = []
-
-    # Traverse the choice table to construct the solution
-    while N > 0 and W > 0:
-        if choice[W][N] == "DIAGONAL":
-            # Add the item to the selected items list
-            selected_items.append(N)
-
-            # Update the remaining capacity and move to the previous item
-            W -= weights[N - 1]
-            N -= 1
+            # Calculate the maximum value by considering two possibilities: including the current item or excluding it
+            include = val[N-1] + knapsackRecursive(W - wt[N-1], N - 1)  # Adjusted index here
+            exclude = knapsackRecursive(W, N - 1)
+            result = max(include, exclude)
+        
+        # Store the result in the memoization table
+        R[W][N] = result
+        return result
+    
+    # Solve the knapsack problem recursively
+    max_value = knapsackRecursive(W, N)
+    
+    # Extract the solution by backtracking
+    def extractSolution(W, N):
+        if W == 0 or N == 0:
+            return []
+        
+        if wt[N-1] > W:  # Adjusted index here
+            return extractSolution(W, N - 1)
+        
+        include = val[N-1] + knapsackRecursive(W - wt[N-1], N - 1)  # Adjusted index here
+        exclude = knapsackRecursive(W, N - 1)
+        
+        if include > exclude:
+            return extractSolution(W - wt[N-1], N - 1) + [N]  # Adjusted index here
         else:
-            # Move to the previous item
-            N -= 1
-
-    # Reverse the selected items list to obtain the correct order
-    selected_items.reverse()
-
-    return selected_items
+            return extractSolution(W, N - 1)
+    
+    # Return the maximum value and the selected items
+    return max_value, extractSolution(W, N)
 
 
-# Test the function
+# Example usage:
 weights = [3, 4, 2, 5]
-values = [5, 6, 3, 8]
-W = 9
-N = len(weights)
+values = [6, 7, 3, 9]
+capacity = 10
+num_items = len(weights)
 
-# Solve the knapsack problem
-dp, choice = knapsack_top_down(W, weights, values, N)
-
-# Construct the solution
-selected_items = construct_solution(choice, weights, W, N)
-
-# Print the maximum benefit and the selected items
-print("Maximum Benefit:", dp)
+max_value, selected_items = knapsack(capacity, weights, values, num_items)
+print("Maximum Value:", max_value)
 print("Selected Items:", selected_items)
