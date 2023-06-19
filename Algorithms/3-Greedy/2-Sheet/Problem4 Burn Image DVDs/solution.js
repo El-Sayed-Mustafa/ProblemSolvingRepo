@@ -18,8 +18,6 @@ function burnImageDVDs(images, DVDs, capacity) {
 
                 // Update remaining capacity
                 remainingCapacity[dvd] -= images[i].size; 
-
-                added = true;
                 break;
             }
         }

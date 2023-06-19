@@ -1,71 +1,38 @@
-def knapsack_top_down(W, weights, values, N):
-    # Create a 2D DP table and choice table
-    dp = [[-1] * (N + 1) for _ in range(W + 1)]
-    choice = [[""] * (N + 1) for _ in range(W + 1)]
+from collections import deque
+#Vasily wants to transform a starting number a into a target number b.
+#  He can use two operations: multiplying the current number by 2 or 
+# `appending the digit 1 to the right. The task is to determine 
+# if there exists a sequence of these operations that can transform a into b.
+# The program should take a and b as input and 
+# output 1 if a transformation is possible, and -1 if it is not.
 
-    # Base case: If either the capacity or the number of items is 0, return 0
-    if W == 0 or N == 0:
-        return 0, choice
+def can_transform(a, b):
+    queue = deque([(a, 0)])  # Initialize the queue with the starting number and the number of steps taken
+    visited = set([a])  # Keep track of visited numbers
 
-    # If the subproblem is already solved, return the stored value
-    if dp[W][N] != -1:
-        return dp[W][N], choice
+    while queue:
+        current, steps = queue.popleft()
 
-    # If the weight of the Nth item is greater than the remaining capacity, skip it
-    if weights[N - 1] > W:
-        dp[W][N], choice[W][N] = knapsack_top_down(W, weights, values, N - 1)
-        choice[W][N] = "UP"
-    else:
-        # Choose the maximum value between including or excluding the Nth item
-        included, _ = knapsack_top_down(W - weights[N - 1], weights, values, N - 1)
-        included += values[N - 1]
-        excluded, _ = knapsack_top_down(W, weights, values, N - 1)
+        if current == b:
+            return 1  # Transformation is possible
 
-        if included > excluded:
-            dp[W][N] = included
-            choice[W][N] = "DIAGONAL"
-        else:
-            dp[W][N] = excluded
-            choice[W][N] = "UP"
+        # Apply the two types of operations
+        multiply = current * 2
+        append = int(str(current) + '1')
 
-    return dp[W][N], choice
+        # Check if the multiplied number is within the allowed range and not visited before
+        if multiply <= b and multiply not in visited:
+            queue.append((multiply, steps + 1))
+            visited.add(multiply)
 
+        # Check if the appended number is within the allowed range and not visited before
+        if append <= b and append not in visited:
+            queue.append((append, steps + 1))
+            visited.add(append)
 
-def construct_solution(choice, weights, W, N):
-    # Create an empty list to store the selected items
-    selected_items = []
+    return -1  # No transformation is possible
 
-    # Traverse the choice table to construct the solution
-    while N > 0 and W > 0:
-        if choice[W][N] == "DIAGONAL":
-            # Add the item to the selected items list
-            selected_items.append(N)
-
-            # Update the remaining capacity and move to the previous item
-            W -= weights[N - 1]
-            N -= 1
-        else:
-            # Move to the previous item
-            N -= 1
-
-    # Reverse the selected items list to obtain the correct order
-    selected_items.reverse()
-
-    return selected_items
-
-
-# Test the function
-weights = [3, 4, 2, 5]
-values = [5, 6, 3, 8]
-W = 9
-N = len(weights)
-
-# Solve the knapsack problem
-dp, choice = knapsack_top_down(W, weights, values, N)
-
-# Construct the solution
-selected_items = construct_solution(choice, weights, W, N)
-
-# Print the maximum benefit and the selected items
-print("Maximum Benefit:", dp)
-print("Selected Items:", selected_items)
+# Example usage
+a, b = 4, 42
+result = can_transform(a, b)
+print(result)
